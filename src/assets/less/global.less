@@ -1,0 +1,272 @@
+@import './theme.less';
+
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}
+.clearfix{
+  overflow: auto;
+  zoom: 1;
+}
+// 滚动条样式重写
+.scroll-bar {
+  overflow: auto;
+}
+
+.form-panel{
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 15px;
+}
+
+::-webkit-scrollbar-button, .ivu-table-overflowX::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-track, .ivu-table-overflowX::-webkit-scrollbar-track {
+  display: none;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb{
+  background: @primary-color;
+  border-radius: 4px;
+}
+
+.thin-table{
+  .ivu-table-cell{
+    padding: 0 8px;
+  }
+}
+
+.panel-wrap {
+  margin-top: 8px;
+  border: solid 1px #e4e4e4;
+  // border-top-style: none;
+  background-color: #fff;
+  &:first-child {
+    margin-top: 0;
+  }
+  .panel-title {
+    padding: 0 15px;
+    line-height: 40px;
+    background: #f7f7f7;
+    border-bottom: solid 1px #e9e9e9;
+  }
+  .panel-content{
+    padding-bottom: 15px;
+    .ivu-table-wrapper{
+      margin: -1px -1px 0 -1px;
+    }
+    &.search-wrap{
+      padding: 0 15px 15px;
+      margin: 0 -15px;
+      label{
+        display: inline-block;
+        margin: 15px 0 0 15px;
+      }
+      /deep/ .ivu-input,.ivu-select{
+        width: 180px;
+      }
+    }
+    .ivu-table-cell{
+      padding: 0 8px;
+    }
+  }
+}
+
+.tab-content{
+  // .scroll-bar::-webkit-scrollbar, .ivu-table-overflowY::-webkit-scrollbar, .ivu-table-overflowX::-webkit-scrollbar {
+  //   width: 20px;
+  //   height: 20px;
+  // }
+
+}
+.tab-page{
+  margin-top: 15px;
+  text-align: center;
+}
+.form-content{
+  position: relative;
+  .panel-wrap{
+    // border: none;
+    .panel-title{
+      font-size: 14px;
+    }
+    .panel-content{
+      // height: calc(~'100% - 40px');
+      background: #fff;
+      padding: 15px;
+    }
+  }
+  legend{
+    display: block;
+    margin-left: 10px;
+    margin-bottom: 15px;
+    line-height: 18px;
+    font-size: 14px;
+    .fieldset-prefix{
+      margin-right: 8px;
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: @primary-color;
+    }
+  }
+  .form-btn-left{
+    text-align: left;
+  }
+  .form-btn-center{
+    text-align: center;
+  }
+  .ivu-form-item-content{
+    position: unset;
+  }
+  .ivu-select-disabled .ivu-select-selection, .ivu-input[disabled], fieldset[disabled] .ivu-input{
+    color: #515a6e;
+  }
+  .ivu-input[readonly='readonly']{
+    background: #f3f3f3;
+  }
+  .default-style{
+    .ivu-input[readonly='readonly']{
+      background: #fff;
+    }
+  }
+  .ivu-date-picker{
+    width: 100%;
+  }
+  .ivu-input-group{
+    top: 0;
+  }
+}
+
+/* 内容左右侧 */
+.content-left{
+  width: 200px;
+  float: left;
+}
+.content-right{
+  width: calc(~'100% - 210px');
+  float: right;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+.ivu-form-h100{
+  height: 100%;
+  .ivu-row-h100{
+    height: 100%;
+  }
+}
+.ivu-table{
+  .ivu-btn{
+    padding: 0;
+    border: none;
+    background: none;
+    &:active, &:focus{
+      box-shadow:none;
+    }
+    &:not([disabled]):active, &:not([disabled]):hover{
+      background: none;
+    }
+  }
+  td.td-align-left{
+    text-align: left;
+  }
+  .ivu-btn.disabled,
+   .ivu-btn[disabled],
+   fieldset[disabled] .ivu-btn,
+    .ivu-btn.disabled:hover,
+     .ivu-btn[disabled]:hover, 
+     fieldset[disabled] .ivu-btn:hover,
+      .ivu-btn.disabled:focus,
+       .ivu-btn[disabled]:focus, 
+       fieldset[disabled] .ivu-btn:focus,
+        .ivu-btn.disabled:active,
+         .ivu-btn[disabled]:active,
+          fieldset[disabled] .ivu-btn:active,
+           .ivu-btn.disabled.active,
+            .ivu-btn[disabled].active,
+             fieldset[disabled] .ivu-btn.active{
+    background: none;
+  }
+}
+
+/* 直角tabs标签 */
+.right-angle-tabs {
+  > .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab{
+    border-radius: 0;
+    background: #fff;
+  }
+  > .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab-active{
+    border-top: 1px solid #39f;
+  }
+  > .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab-active::before{
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: #39f;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .ivu-tabs-bar{
+    border-bottom: none;
+  }
+  .ivu-tabs.ivu-tabs-card {
+    .ivu-tabs-bar {
+      margin-bottom: 0;
+    }
+    & > .ivu-tabs-bar .ivu-tabs-tab-active {
+      border-left-color: #dcdee2 !important;
+      border-right-color: #dcdee2 !important;
+    }
+  }
+}
+
+// flex布局
+.layout-top-bottom {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .layout-bottom {
+    flex: 1;
+    position: relative;
+    padding-bottom: 0;
+  }
+}
+
+
+.srollbar-tree{
+  overflow: auto;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar{/* 滚动条整体样式 */
+  width: 6px;     /* 高宽分别对应横竖滚动条的尺寸 */
+  height: 10px;
+}
+::-webkit-scrollbar-thumb{/* 滚动条里面小方块 */
+  background: @primary-color;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-track {/* 滚动条里面轨道 */
+ display: none;
+}
+::-webkit-scrollbar-resizer {/* 滚动条里面轨道 */
+  background: @primary-color;
+}
+/*单位转换
+*转化px为rem。$base-font-size = 设计稿尺寸/10
+调用方式直接： width: .px2rem(175);
+*/
+// .pxTorem(@px, @base-font-size: 37.5) {
+//   @pxTorem (@px/@base-font-size)*1rem;
+// }
+

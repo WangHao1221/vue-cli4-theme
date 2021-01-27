@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale= 1.0, minimum-scale=1.0">
+    <link rel="icon" href="./favicon.ico">
+    <title>
+        <%=process.env.VUE_APP_PROJECT_NAME %>
+    </title>
+    <!-- 使用CDN的CSS文件 -->
+    <% for (var i in htmlWebpackPlugin.options.cdn &&
+  htmlWebpackPlugin.options.cdn.css) { %>
+        <link rel="stylesheet" href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" />
+        <% } %>
+
+            <!-- 使用CDN的JS文件 -->
+            <% for (var i in htmlWebpackPlugin.options.cdn &&
+  htmlWebpackPlugin.options.cdn.js) { %>
+                <script type="text/javascript" src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"></script>
+                <% } %>
+</head>
+
+<body>
+    <noscript>
+      <strong>您的浏览器暂不支持运行javascript，请开启相关设置后重试！</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+</body>
+<script>
+</script>
+
+</html>
