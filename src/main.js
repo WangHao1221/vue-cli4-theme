@@ -6,7 +6,7 @@ import ViewUI from 'view-design'
 import router from './router';
 import store from './store';
 import 'view-design/dist/styles/iview.css';
-import '@/less/theme.less'
+import '@/assets/less/theme.less'
 import echarts from 'echarts';
 import Storage from '@/plugins/storage'
 import common from '@/plugins/commons' //引入公共js
@@ -34,6 +34,7 @@ new Vue({
     render: h => h(App),
 }).$mount('#app');
 router.beforeEach((to, from, next) => { //导航守卫
+    // console.log(to, from)
     if (to.name != 'login' && to.name != 'loginPath' && to.name != 'home') {
         if (Storage.get('routerArr').indexOf(to.name) == -1) { //如果当前路由不在权限路由数组中进行提醒
             ViewUI.Message.error({

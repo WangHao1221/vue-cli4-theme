@@ -480,40 +480,20 @@ export default {
   },
   mounted () {
     this.userName = Storage.get('userName');
-    let manuListCache = Storage.get('menuList') || [//侧边栏菜单列表
-    {
-      id: '1',
-      name: '模板管理',
-      parentCode: '-1',
-      icon: '',
-      code: '1',
-      path: 'template',
-      depth: 0,
-      haveChild: 1,
-      resChile: [
-        {
-          id: '1-1',
-          parentCode: '1',
-          name: '模板管理',
-          icon: '',
-          path: 'templateManage',
-        }
-      ]
-    }
-  ];
-  console.log(manuListCache)
+    let manuListCache = Storage.get('menuList');
     if(manuListCache){
-      this.menuList = manuListCache || JSON.parse(manuListCache);
+      this.menuList = JSON.parse(manuListCache);
     } else {
       Storage.removeAll();
       location.href = process.env.VUE_APP_BASE_URL;
     }
-    this.menuList.forEach(item => {
-      this.getRouteArr(item);
-    });
+    
     if(this.routerArr.indexOf('home') == -1){
       this.routerArr.push('home');
     }
+    this.menuList.forEach(item => {
+      this.getRouteArr(item);
+    });
     Storage.set("routerArr", this.routerArr);
     if(Storage.get('tagNaveList')){
       this.tagList = JSON.parse(Storage.get('tagNaveList'))
@@ -533,19 +513,18 @@ export default {
   },
   watch: {
     '$route' (newRoute) {
-      console.log(newRoute);
       const { name, query, params, meta } = newRoute
       if(this.tagList.findIndex(item => item.name === name) == -1){
-        if(newRoute.matched.length > 2){
-          const parents = newRoute.matched.filter((item, index)=>{
-            return index > 0 && index < newRoute.matched.length -1
-          });
-          parents.forEach(item => {
-            if(this.tagList.findIndex(findItem => findItem.name === item.name) == -1){
-              this.tagList.push({ name: item.name, query: item.query, params: item.params, meta: item.meta, hiddenInTag:  true});
-            }
-          });
-        }
+        // if(newRoute.matched.length > 2){
+        //   const parents = newRoute.matched.filter((item, index)=>{
+        //     return index > 0 && index < newRoute.matched.length -1
+        //   });
+        //   parents.forEach(item => {
+        //     if(this.tagList.findIndex(findItem => findItem.name === item.name) == -1){
+        //       this.tagList.push({ name: item.name, query: item.query, params: item.params, meta: item.meta, hiddenInTag:  true});
+        //     }
+        //   });
+        // }
         this.tagList.push({ name, query, params, meta });
         this.$store.commit('setCacheList', this.tagList.map(item=>item.name))
         setTagNavListInLocalstorage([...this.tagList]);

@@ -22,7 +22,7 @@ export default new Router({
                 import ('@/components/main/main'),
             redirect: { name: 'home' },
             children: [{
-                    path: 'home',
+                    path: '/home',
                     name: 'home',
                     meta: {
                         title: '首页'

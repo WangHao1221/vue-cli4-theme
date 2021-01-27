@@ -1,11 +1,11 @@
-import templateIndexView from '@/views/template/index'
+import parentView from '@/components/main/parent-view'
 export default {
     path: '/template',
     name: 'template',
     meta: {
-        title: '模板系统'
+        title: '模板系统管理'
     },
-    component: templateIndexView,
+    component: parentView,
     children: [{
         path: 'templateManage',
         name: 'templateManage',
@@ -14,5 +14,13 @@ export default {
         },
         component: () =>
             import ('@/views/template/templateManage.vue')
+    }, {
+        path: 'docManage',
+        name: 'docManage',
+        meta: {
+            title: '文档管理'
+        },
+        component: () =>
+            import ('@/views/template/docManage.vue')
     }]
 }

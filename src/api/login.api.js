@@ -36,7 +36,7 @@ export const sysUsersfindUserRes = params => {
 export const sysUsersupdateUserPassword = params => {
         return axios.post(`${axios.MANAGE_BASE_API}/sysUsers/updateUserPassword`, params).then(res => res)
     }
-    //获取菜单
+    //获取菜单(后台)
 export const getMenus = params => {
     return axios.post(`${axios.MANAGE_BASE_API}/sysUsers/findUserResTree`, params).then(res => res)
 }

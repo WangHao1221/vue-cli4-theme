@@ -1,6 +1,7 @@
  import axios from 'axios';
  import Storage from '@/plugins/storage';
  import store from '@/store'
+ import { Message } from 'view-design'
 
  axios.AUTH_BASE_API = '/sso/auth';
 
@@ -20,11 +21,14 @@
  axios.interceptors.request.use(
      config => {
          const token = Storage.get('token')
-         if (!token && config.url.indexOf('/auth/checkOauth/') === -1) {
+         if (!token && config.url.indexOf('/owath.token') === -1) {
              toLogin()
              Promise.reject('token不存在')
+             setTimeout(function() {
+                 store.dispatch('SetLoading', 0)
+             }, 300)
          }
-         store.dispatch.$emit('SetLoading', true)
+         store.dispatch('SetLoading', true)
          if (token) config.headers['Authorization'] = token
          config.headers['Cache-Control'] = 'no-cache'
          config.headers['Pragma'] = 'no-cache'
@@ -37,8 +41,6 @@
          }, 300)
          return Promise.reject(err);
      });
-
-
 
  // http response 拦截器
  axios.interceptors.response.use(function(response) {
@@ -101,8 +103,6 @@
      } else {
          if (!window.navigator.onLine) {
              err.message = '断网了，请检查您的网络连接'
-         } else {
-             err.message = '连接服务器失败!'
          }
      }
      Message.error(err.message)

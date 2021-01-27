@@ -94,7 +94,6 @@ module.exports = {
         config.resolve.alias
             .set("@", resolve("src"))
             .set("@/assets", resolve("src/assets"))
-            .set("@/less", resolve("src/assets/less"))
             .set("@/components", resolve("src/components"))
             .set("@/plugins", resolve("src/plugins"))
             .set("@/views", resolve("src/views"))
