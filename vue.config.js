@@ -26,13 +26,6 @@ module.exports = {
         const plugins = [];
 
         if (IS_DEV) {
-            // 开启 eslint 检测less, css语法
-            // plugins.push(
-            //     new StylelintPlugin({
-            //         files: ["src/**/*.vue", "src/assets/**/*.less"],
-            //         fix: true
-            //     })
-            // );
             // 关闭host check，方便使用ngrok之类的内网转发工具
             config.devServer = {
                 disableHostCheck: true
@@ -158,6 +151,10 @@ module.exports = {
         port: "8888",
         // https: false,
         // hotOnly: false, // 热更新
+        // useEslint: true,
+        // If true, eslint errors and warnings will also be shown in the error overlay
+        // in the browser.
+        // showEslintErrorsInOverlay: true,
         proxy: {
             "/api": {
                 target: "https://sfmpdev.qhse.cn", // 目标代理接口地址
