@@ -146,7 +146,7 @@ export default {
     return {
       sysName: process.env.VUE_APP_PROJECT_NAME,//项目名称
       sysVersion: 'V1.0.0',//项目版本
-      userName: "admin",
+      userName: "",
       isCollapsed: false,//是否收起侧边栏
       openNames: [],//展开的submenu的name集合
       isFullscreen: false,//是否全屏
@@ -479,7 +479,7 @@ export default {
     }
   },
   mounted () {
-    this.userName = Storage.get('userName');
+    this.userName = Storage.get('userName') || 'adminMaster';
     let manuListCache = Storage.get('menuList');
     if(manuListCache){
       this.menuList = JSON.parse(manuListCache);

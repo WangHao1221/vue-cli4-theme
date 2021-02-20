@@ -2,7 +2,6 @@ const IS_PROD = ["production", "prod"].includes(process.env.NODE_ENV);
 const IS_DEV = ["development"].includes(process.env.NODE_ENV);
 const path = require("path");
 const resolve = (dir) => path.join(__dirname, dir);
-const StylelintPlugin = require("stylelint-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
     .BundleAnalyzerPlugin;
 const glob = require('glob');
@@ -27,13 +26,13 @@ module.exports = {
         const plugins = [];
 
         if (IS_DEV) {
-            // 开启 stylelint 检测less, css语法
-            plugins.push(
-                new StylelintPlugin({
-                    files: ["src/**/*.vue", "src/assets/**/*.less"],
-                    fix: true
-                })
-            );
+            // 开启 eslint 检测less, css语法
+            // plugins.push(
+            //     new StylelintPlugin({
+            //         files: ["src/**/*.vue", "src/assets/**/*.less"],
+            //         fix: true
+            //     })
+            // );
             // 关闭host check，方便使用ngrok之类的内网转发工具
             config.devServer = {
                 disableHostCheck: true

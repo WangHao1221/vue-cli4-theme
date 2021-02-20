@@ -11,12 +11,14 @@
 
 <script>
 import * as loginServer from '@/api/login.api';
- import axios from 'axios';
+import axios from 'axios';
+import {getMenuList} from '@/components/main/menu.js'
 
 export default {
   name: 'Login',
   data () {
     return {
+      menuList:[]
     }
   },
   methods : {
@@ -85,36 +87,13 @@ export default {
           }).catch((error)=>{})
     },
     localLogin(){
-        const List = [{
-              "id": "1",
-              "name": "模板系统管理",
-              "parentCode": "-1",
-              "icon": "",
-              "code": "1",
-              "path": "template",
-              "depth": 0,
-              "haveChild": 1,
-              "resChile": [{
-                  "id": "1-1",
-                  "parentCode": "1",
-                  "name": "模板管理",
-                  "icon": "",
-                  "path": "templateManage",
-              },{
-                  "id": "1-2",
-                  "parentCode": "1",
-                  "name": "文档管理",
-                  "icon": "",
-                  "path": "docManage",
-              }]
-          }];
-          Storage.removeAll();
-            Storage.set('menuList', JSON.stringify(List));
-            this.$router.push("main")
+        const List = getMenuList();
+        Storage.removeAll();
+        Storage.set('menuList', JSON.stringify(List));
+        this.$router.push("main")
     }
   },
   created () {
-
   },
   mounted () {
     // this.newLogin();

@@ -31,10 +31,6 @@
         "glob-all": "^3.2.1",
         "image-webpack-loader": "^7.0.1",
         "purgecss-webpack-plugin": "^4.0.0",
-        "stylelint": "^13.9.0",
-        "stylelint-config-prettier": "^8.0.2",
-        "stylelint-config-standard": "^20.0.0",
-        "stylelint-webpack-plugin": "^2.1.1",
         "vue-template-compiler": "^2.6.11",
         "less": "^2.7.3",
         "less-loader": "^4.1.0"
