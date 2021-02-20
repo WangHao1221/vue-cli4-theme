@@ -30,5 +30,11 @@ npm run build
 npm run lint
 ```
 
+### eslint相关
+```
+eslint配置规则参考:
+https://blog.csdn.net/alnorthword/article/details/93618157
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

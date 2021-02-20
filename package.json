@@ -11,14 +11,13 @@
         "lint": "vue-cli-service lint",
         "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "npm run lint-staged"
-        }
+    "gitHooks": {
+        "prepare-commit-msg": "lint-staged"
     },
     "lint-staged": {
         "**/*.{js,vue}": [
-            "vue-cli-service lint"
+            "vue-cli-service lint",
+            "git add"
         ]
     },
     "dependencies": {
@@ -62,7 +61,15 @@
         "parserOptions": {
             "parser": "babel-eslint"
         },
-        "rules": {}
+        "rules": {
+            "no-dupe-keys": 2,
+            "no-dupe-args": 2,
+            "no-func-assign": 2,
+            "no-multiple-empty-lines": [1, { "max": 2 }],
+            "no-plusplus": 0,
+            "no-redeclare": 2,
+            "no-self-compare": 2
+        }
     },
     "browserslist": [
         "> 1%",
