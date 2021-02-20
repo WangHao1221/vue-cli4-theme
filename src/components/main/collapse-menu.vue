@@ -18,37 +18,38 @@
 </template>
 
 <script>
-import { findNodeUpperByClasses } from '@/plugins/util'
+import { findNodeUpperByClasses } from '@/plugins/util';
+
 export default {
   name: 'collapseMenu',
   props: {
     parentItem: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     hideTitle: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
+  data() {
     return {
 
-    }
+    };
   },
   methods: {
-    collapseClick (name) {
+    collapseClick(name) {
       console.log(name);
-      this.$emit('on-click', name)
+      this.$emit('on-click', name);
     },
     handleMousemove(event, children) {
-    }
+    },
   },
-  mounted () {
-    let dropdown = findNodeUpperByClasses(this.$refs.dropdown.$el, ['ivu-select-dropdown', 'ivu-dropdown-transfer'])
-    if (dropdown) dropdown.style.overflow = 'visible'
-  }
-}
+  mounted() {
+    const dropdown = findNodeUpperByClasses(this.$refs.dropdown.$el, ['ivu-select-dropdown', 'ivu-dropdown-transfer']);
+    if (dropdown) dropdown.style.overflow = 'visible';
+  },
+};
 </script>
 
 <style lang="less" scoped>

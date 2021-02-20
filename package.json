@@ -8,7 +8,8 @@
         "build": "vue-cli-service build",
         "test": "vue-cli-service build --mode test",
         "pre": "vue-cli-service build --mode pre",
-        "lint": "vue-cli-service lint"
+        "lint": "vue-cli-service lint",
+        "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src"
     },
     "dependencies": {
         "axios": "^0.19.0",
@@ -24,10 +25,12 @@
         "@vue/cli-plugin-eslint": "~4.5.0",
         "@vue/cli-service": "~4.5.0",
         "babel-eslint": "^10.1.0",
+        "@vue/eslint-config-airbnb": "^5.0.2",
         "babel-plugin-transform-remove-console": "^6.9.4",
         "compression-webpack-plugin": "^7.1.2",
         "eslint": "^6.7.2",
         "eslint-plugin-vue": "^6.2.2",
+        "eslint-plugin-import": "^2.20.2",
         "glob-all": "^3.2.1",
         "image-webpack-loader": "^7.0.1",
         "purgecss-webpack-plugin": "^4.0.0",
@@ -42,7 +45,7 @@
         },
         "extends": [
             "plugin:vue/essential",
-            "eslint:airbnb"
+            "@vue/airbnb"
         ],
         "parserOptions": {
             "parser": "babel-eslint"

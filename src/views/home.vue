@@ -12,12 +12,12 @@
 <script>
 export default {
   name: 'home',
-  data () {
-    return{
+  data() {
+    return {
 
-    }
-  }
-}
+    };
+  },
+};
 </script>
 
 <style lang="less" scoped>

@@ -1,31 +1,31 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-    state: {
-        cacheList: '',
-        loading: 0
+  state: {
+    cacheList: '',
+    loading: 0,
+  },
+  getters: {
+    loading: (state) => state.loading,
+  },
+  mutations: {
+    setCacheList(state, listArray) {
+      state.cacheList = listArray;
     },
-    getters: {
-        loading: state => state.loading
+    SET_LOADING(state, status) {
+      if (status === 0) {
+        state.loading = 0;
+        return;
+      }
+      state.loading = status ? ++state.loading : --state.loading;
     },
-    mutations: {
-        setCacheList(state, listArray) {
-            state.cacheList = listArray
-        },
-        SET_LOADING(state, status) {
-            if (0 === status) {
-                state.loading = 0
-                return
-            }
-            state.loading = status ? ++state.loading : --state.loading
-        },
+  },
+  actions: {
+    SetLoading({ commit }, status) {
+      commit('SET_LOADING', status);
     },
-    actions: {
-        SetLoading({ commit }, status) {
-            commit('SET_LOADING', status)
-        },
-    }
-})
+  },
+});

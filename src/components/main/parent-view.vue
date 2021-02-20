@@ -5,12 +5,12 @@
 </template>
 
 <script>
-  export default {
-    name: 'template',
-    computed: {
-      cacheList () {
-        return this.$store.state.cacheList;
-      }
-    }
-  }
+export default {
+  name: 'template',
+  computed: {
+    cacheList() {
+      return this.$store.state.cacheList;
+    },
+  },
+};
 </script>

@@ -6,28 +6,29 @@
 </template>
 
 <script>
-import '@/assets/less/global.less'
-import { mapGetters } from 'vuex'
+import '@/assets/less/global.less';
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'App',
   computed: {
-    ...mapGetters(['loading'])
+    ...mapGetters(['loading']),
   },
   data() {
     return {
-      spinShow: ''
-    }
+      spinShow: '',
+    };
   },
   watch: {
     loading() {
       if (!this.loading) {
-        this.spinShow = false
+        this.spinShow = false;
       } else {
-        this.spinShow = true
+        this.spinShow = true;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="less">
@@ -37,8 +38,8 @@ export default {
 html,body{
   .size;
 
-  overflow: hidden; 
-  margin: 0; 
+  overflow: hidden;
+  margin: 0;
   padding: 0;
 }
 #app {

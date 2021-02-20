@@ -20,16 +20,16 @@
 // import * as loginService from '@/api/login.api'
 
 export default {
-  name: "templateManage",
+  name: 'templateManage',
   data() {
     return {
-      
+
     };
   },
   methods: {
-    
+
   },
-  destroyed(){
+  destroyed() {
   },
   mounted() {
     // loginService.sysUsersfindUserRes().then(res=>{
@@ -37,7 +37,7 @@ export default {
     // }).catch(err=>{
 
     // })
-  }
+  },
 };
 </script>
 

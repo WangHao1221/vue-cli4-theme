@@ -131,390 +131,387 @@
 </template>
 
 <script>
-import '@/assets/less/frame.less'//框架样式
-import subMenuItem from './sub-menu-item'//展开的菜单层级
-import collapseMenu from './collapse-menu'//收起的菜单层级
-import { routeEqual,setTagNavListInLocalstorage } from '@/plugins/util'
-import * as loginServer from '@/api/login.api'
+import '@/assets/less/frame.less';// 框架样式
+import { routeEqual, setTagNavListInLocalstorage } from '@/plugins/util';
+import * as loginServer from '@/api/login.api';
+import subMenuItem from './sub-menu-item';// 展开的菜单层级
+import collapseMenu from './collapse-menu';// 收起的菜单层级
+
 export default {
   name: 'home',
   components: {
     subMenuItem,
-    collapseMenu
+    collapseMenu,
   },
-  data () {
+  data() {
     return {
-      sysName: process.env.VUE_APP_PROJECT_NAME,//项目名称
-      sysVersion: 'V1.0.0',//项目版本
-      userName: "",
-      isCollapsed: false,//是否收起侧边栏
-      openNames: [],//展开的submenu的name集合
-      isFullscreen: false,//是否全屏
-      tagNavList: [],//tab标签列表
-      tagBodyLeft: 0,//tag当前滚动的位置
-      tagMarginRight: 4,//每个tag距右边的外边距
-      routerArr: [],//权限路由数据
+      sysName: process.env.VUE_APP_PROJECT_NAME, // 项目名称
+      sysVersion: 'V1.0.0', // 项目版本
+      userName: '',
+      isCollapsed: false, // 是否收起侧边栏
+      openNames: [], // 展开的submenu的name集合
+      isFullscreen: false, // 是否全屏
+      tagNavList: [], // tab标签列表
+      tagBodyLeft: 0, // tag当前滚动的位置
+      tagMarginRight: 4, // 每个tag距右边的外边距
+      routerArr: [], // 权限路由数据
       menuList: [],
-      showModel:false,
+      showModel: false,
       showNavBtn: false,
       currentTag: null,
-      passwordData:{
-        newPassword:'',
-        oldPassword:'',
-        newTruePassword:''
+      passwordData: {
+        newPassword: '',
+        oldPassword: '',
+        newTruePassword: '',
       },
-      tagList: [//tag列表
+      tagList: [// tag列表
         {
           name: 'home',
           meta: {
-            title: '首页'
+            title: '首页',
           },
           params: {},
-          query: {}
+          query: {},
         },
       ],
-    }
+    };
   },
   computed: {
-    rotateIcon () {//收起侧边栏按钮图标样式
+    rotateIcon() { // 收起侧边栏按钮图标样式
       return [
         'menu-icon',
-        this.isCollapsed ? 'rotate-icon' : ''
+        this.isCollapsed ? 'rotate-icon' : '',
       ];
     },
-    cacheList () {
+    cacheList() {
       return [...this.$store.state.cacheList];
-    }
+    },
   },
   methods: {
-    routeTo (route) {//菜单点击
-      let { name, params, query } = {}
+    routeTo(route) { // 菜单点击
+      let { name, params, query } = {};
       if (typeof route === 'string') {
-        name = route
-      }else {
-        name = route.name
-        params = route.params
-        query = route.query
+        name = route;
+      } else {
+        name = route.name;
+        params = route.params;
+        query = route.query;
       }
-      if(name != this.$route.name){
+      if (name != this.$route.name) {
         this.$router.push({
           name,
           params,
-          query
-        })
+          query,
+        });
       }
     },
-    collapseClick (name) {//collapse菜单点击
-      this.routeTo(name)
+    collapseClick(name) { // collapse菜单点击
+      this.routeTo(name);
     },
-    collapsedSider () {//侧边栏展开收起
+    collapsedSider() { // 侧边栏展开收起
       this.$refs.side1.toggleCollapse();
     },
-    getOpenName (routePath) {//展开的submenu的name集合
-      let openNameArr = routePath.split('/');
+    getOpenName(routePath) { // 展开的submenu的name集合
+      const openNameArr = routePath.split('/');
       openNameArr.shift();
       this.openNames = openNameArr;
       this.$nextTick(() => {
-        this.$refs.menu.updateOpened()
-      })
+        this.$refs.menu.updateOpened();
+      });
     },
-    handleFullscreen () {
-      let main = document.body
+    handleFullscreen() {
+      const main = document.body;
       if (this.isFullscreen) {
         if (document.exitFullscreen) {
-          document.exitFullscreen()
+          document.exitFullscreen();
         } else if (document.mozCancelFullScreen) {
-          document.mozCancelFullScreen()
+          document.mozCancelFullScreen();
         } else if (document.webkitCancelFullScreen) {
-          document.webkitCancelFullScreen()
+          document.webkitCancelFullScreen();
         } else if (document.msExitFullscreen) {
-          document.msExitFullscreen()
+          document.msExitFullscreen();
         }
-      } else {
-        if (main.requestFullscreen) {
-          main.requestFullscreen()
-        } else if (main.mozRequestFullScreen) {
-          main.mozRequestFullScreen()
-        } else if (main.webkitRequestFullScreen) {
-          main.webkitRequestFullScreen()
-        } else if (main.msRequestFullscreen) {
-          main.msRequestFullscreen()
-        }
+      } else if (main.requestFullscreen) {
+        main.requestFullscreen();
+      } else if (main.mozRequestFullScreen) {
+        main.mozRequestFullScreen();
+      } else if (main.webkitRequestFullScreen) {
+        main.webkitRequestFullScreen();
+      } else if (main.msRequestFullscreen) {
+        main.msRequestFullscreen();
       }
-      this.isFullscreen = !this.isFullscreen
+      this.isFullscreen = !this.isFullscreen;
     },
-    handleChange () {
-      this.handleFullscreen()
+    handleChange() {
+      this.handleFullscreen();
     },
-    isCurrntTag (item) {//判断当前活动的tab
-      return routeEqual(this.$route, item)
+    isCurrntTag(item) { // 判断当前活动的tab
+      return routeEqual(this.$route, item);
     },
-    tagClick (item) {//tag点击
-      this.routeTo(item)
+    tagClick(item) { // tag点击
+      this.routeTo(item);
     },
-    changeNavBarStatus(){
-      setTimeout(()=>{
-        if(this.$refs && this.$refs.tagList && this.$refs.tagScrollContainer){
-          if(this.$refs.tagList.clientWidth < this.$refs.tagScrollContainer.clientWidth){
+    changeNavBarStatus() {
+      setTimeout(() => {
+        if (this.$refs && this.$refs.tagList && this.$refs.tagScrollContainer) {
+          if (this.$refs.tagList.clientWidth < this.$refs.tagScrollContainer.clientWidth) {
             this.showNavBtn = false;
-          }else{
+          } else {
             this.showNavBtn = true;
           }
         }
-      }, 300)
+      }, 300);
     },
-    tagClose (item) {//tag关闭
+    tagClose(item) { // tag关闭
       item.meta.notCache = true;
-      let name = item.name;
-      const itemIdx = this.tagList.findIndex(item =>
-        item.name === name
-      )
-      this.tagList.splice(itemIdx, 1)
-      this.$store.commit('setCacheList', this.tagList.map(item=>item.name))
+      const { name } = item;
+      const itemIdx = this.tagList.findIndex((item) => item.name === name);
+      this.tagList.splice(itemIdx, 1);
+      this.$store.commit('setCacheList', this.tagList.map((item) => item.name));
       this.changeNavBarStatus();
-      if (routeEqual(item, this.$route)){//如果关闭的是当前活动tag
-        if (itemIdx == this.tagList.length){//关闭tag在最后一个位置
-          this.routeTo(this.tagList[itemIdx-1].name)
-        }else{
-          this.routeTo(this.tagList[itemIdx].name)
-        }
-      }else{
-        setTimeout(()=>{
-            this.moveToView(this.currentTag)
-          },600);
-          setTagNavListInLocalstorage([...this.tagList]);
-      }
-    },
-    tagNavScroll (type) {//tag-nav前后滑动
-      const tagListWidth = this.$refs.tagList.clientWidth;//tag-list的总宽度
-      const scrollContainerWidth = this.$refs.tagScrollContainer.clientWidth;//滚动容器的宽度
-      if(type === 'prev'){
-        this.tagBodyLeft = Math.min(0, this.tagBodyLeft + scrollContainerWidth)
-      }else{
-        if (scrollContainerWidth < tagListWidth) {
-          if (this.tagBodyLeft < -(tagListWidth - scrollContainerWidth)) {
-            this.tagBodyLeft = this.tagBodyLeft
-          } else {
-            this.tagBodyLeft = Math.max(this.tagBodyLeft + (-scrollContainerWidth), scrollContainerWidth - tagListWidth)
-          }
+      if (routeEqual(item, this.$route)) { // 如果关闭的是当前活动tag
+        if (itemIdx == this.tagList.length) { // 关闭tag在最后一个位置
+          this.routeTo(this.tagList[itemIdx - 1].name);
         } else {
-          this.tagBodyLeft = 0
+          this.routeTo(this.tagList[itemIdx].name);
         }
+      } else {
+        setTimeout(() => {
+          this.moveToView(this.currentTag);
+        }, 600);
+        setTagNavListInLocalstorage([...this.tagList]);
       }
     },
-    moveToView (tag) {//移动当前活动tag在可视范围内
+    tagNavScroll(type) { // tag-nav前后滑动
+      const tagListWidth = this.$refs.tagList.clientWidth;// tag-list的总宽度
+      const scrollContainerWidth = this.$refs.tagScrollContainer.clientWidth;// 滚动容器的宽度
+      if (type === 'prev') {
+        this.tagBodyLeft = Math.min(0, this.tagBodyLeft + scrollContainerWidth);
+      } else if (scrollContainerWidth < tagListWidth) {
+        if (this.tagBodyLeft < -(tagListWidth - scrollContainerWidth)) {
+          this.tagBodyLeft = this.tagBodyLeft;
+        } else {
+          this.tagBodyLeft = Math.max(this.tagBodyLeft + (-scrollContainerWidth), scrollContainerWidth - tagListWidth);
+        }
+      } else {
+        this.tagBodyLeft = 0;
+      }
+    },
+    moveToView(tag) { // 移动当前活动tag在可视范围内
       const outerWidth = this.$refs.tagScrollContainer.clientWidth;
       const bodyWidth = this.$refs.tagList.clientWidth;
       const tagleftX = tag.offsetWidth + tag.offsetLeft + this.tagMarginRight;
       const tagRightX = tag.offsetWidth + tag.offsetLeft + this.tagMarginRight;
       let visibleAreaBodyRight = outerWidth - this.tagBodyLeft; // 可视标签区域
-      if(visibleAreaBodyRight > bodyWidth){
+      if (visibleAreaBodyRight > bodyWidth) {
         visibleAreaBodyRight = bodyWidth + this.tagBodyLeft;
       }
       if (bodyWidth < outerWidth) {
-        this.tagBodyLeft = 0
+        this.tagBodyLeft = 0;
       } else if (tag.offsetLeft < -this.tagBodyLeft || this.$route.name == 'home') {
         // 标签在可视区域左侧
-        this.tagBodyLeft = -tag.offsetLeft + this.tagMarginRight
+        this.tagBodyLeft = -tag.offsetLeft + this.tagMarginRight;
       } else if (tag.offsetLeft > -this.tagBodyLeft && tag.offsetLeft + tag.offsetWidth < -this.tagBodyLeft + outerWidth) {
         // let tagRightX = tag.offsetWidth + tag.offsetLeft + this.tagMarginRight;
         // if(tagRightX > )
         // 标签在可视区域
-        this.tagBodyLeft = Math.min(0, outerWidth - tag.offsetWidth - tag.offsetLeft - this.tagMarginRight)
+        this.tagBodyLeft = Math.min(0, outerWidth - tag.offsetWidth - tag.offsetLeft - this.tagMarginRight);
       } else {
         // 标签在可视区域右侧
-        this.tagBodyLeft = -(tag.offsetLeft - (outerWidth - this.tagMarginRight - tag.offsetWidth))
+        this.tagBodyLeft = -(tag.offsetLeft - (outerWidth - this.tagMarginRight - tag.offsetWidth));
       }
     },
-    getTagElementByRoute (route) {//获取当前活动tag元素
+    getTagElementByRoute(route) { // 获取当前活动tag元素
       this.$nextTick(() => {
-        const tagListWidth = this.$refs.tagList.clientWidth;//tag-list的总宽度
-        const scrollContainerWidth = this.$refs.tagScrollContainer.clientWidth;//滚动容器的宽度
+        const tagListWidth = this.$refs.tagList.clientWidth;// tag-list的总宽度
+        const scrollContainerWidth = this.$refs.tagScrollContainer.clientWidth;// 滚动容器的宽度
         let isShowNavBtn = false;
         if (tagListWidth > scrollContainerWidth) {
           isShowNavBtn = true;
-        }else{
+        } else {
           isShowNavBtn = false;
         }
-        if(isShowNavBtn !== this.showNavBtn){
+        if (isShowNavBtn !== this.showNavBtn) {
           this.showNavBtn = isShowNavBtn;
           this.$nextTick(() => {
             this.refsTag = this.$refs.tagsPageOpened;
             this.refsTag.forEach((item, index) => {
               if (routeEqual(route, item.$attrs['data-route-item'])) {
-                let tag = this.refsTag[index].$el;
+                const tag = this.refsTag[index].$el;
                 this.currentTag = tag;
-                this.moveToView(tag)
+                this.moveToView(tag);
               }
-            })
-          })
+            });
+          });
         } else {
-          this.refsTag = this.$refs.tagsPageOpened
+          this.refsTag = this.$refs.tagsPageOpened;
           this.refsTag.forEach((item, index) => {
             if (routeEqual(route, item.$attrs['data-route-item'])) {
-              let tag = this.refsTag[index].$el
+              const tag = this.refsTag[index].$el;
               this.currentTag = tag;
-              this.moveToView(tag)
+              this.moveToView(tag);
             }
-          })
+          });
         }
-      })
+      });
     },
-    userDropClick (type) {
-      if(type == 'loginOut'){
+    userDropClick(type) {
+      if (type == 'loginOut') {
         Storage.removeAll();
         location.href = process.env.VUE_APP_BASE_URL;
-      }else if(type ==='changePass'){
+      } else if (type === 'changePass') {
         this.showModel = true;
       }
     },
     closeNav(type) {
       let currentTagIndex = -1;
       let closeNumber = 0;
-      switch(type){
+      switch (type) {
         case 'all':
           this.tagList = [{
             name: 'home',
             meta: {
-              title: '首页'
+              title: '首页',
             },
             params: {},
-            query: {}
+            query: {},
           }];
           this.tagClick(this.tagList[0]);
           break;
         case 'left':
-          currentTagIndex = this.tagList.findIndex(item => item.name === this.$route.name)
-          if( currentTagIndex > 1) {
-            this.tagList.splice(1, currentTagIndex-1);
+          currentTagIndex = this.tagList.findIndex((item) => item.name === this.$route.name);
+          if (currentTagIndex > 1) {
+            this.tagList.splice(1, currentTagIndex - 1);
             this.moveToView(this.tagList[1]);
           }
           break;
         case 'right':
-          currentTagIndex = this.tagList.findIndex(item => item.name === this.$route.name);
+          currentTagIndex = this.tagList.findIndex((item) => item.name === this.$route.name);
           closeNumber = this.tagList.length - 1 - currentTagIndex;
-          if( closeNumber > 0) {
+          if (closeNumber > 0) {
             this.tagList.splice(currentTagIndex + 1);
             this.moveToView(this.tagList[currentTagIndex]);
           }
           break;
         case 'other':
-          currentTagIndex = this.tagList.findIndex(item => item.name === this.$route.name);
+          currentTagIndex = this.tagList.findIndex((item) => item.name === this.$route.name);
           closeNumber = this.tagList.length - 1 - currentTagIndex;
-          if( closeNumber > 0) {
+          if (closeNumber > 0) {
             this.tagList.splice(currentTagIndex + 1);
           }
-          if( currentTagIndex > 1) {
-            this.tagList.splice(1, currentTagIndex-1);
+          if (currentTagIndex > 1) {
+            this.tagList.splice(1, currentTagIndex - 1);
           }
           this.moveToView(this.tagList[1]);
           break;
       }
-      this.$store.commit('setCacheList', this.tagList.map(item=>item.name))
+      this.$store.commit('setCacheList', this.tagList.map((item) => item.name));
       setTagNavListInLocalstorage([...this.tagList]);
     },
-    save(){
-      if(!this.passwordData.oldPassword){
+    save() {
+      if (!this.passwordData.oldPassword) {
         this.$Message.warning('请输入原始密码');
         return;
       }
-      if(!this.passwordData.newPassword){
+      if (!this.passwordData.newPassword) {
         this.$Message.warning('请输入新密码');
         return;
       }
-      if(this.passwordData.newPassword.length<6){
+      if (this.passwordData.newPassword.length < 6) {
         this.$Message.warning('密码格式不正确,6-20位数');
         return;
       }
-      var regex = new RegExp('^.*(?=.{8,16})(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[~!@#$%^&*?\(\)]).*$');
-      if(!regex.test(this.passwordData.newPassword)){
-        this.$Message.warning("新密码应该由8-16位大写字母、小写字母、数字与特殊符号的组合！");
+      const regex = new RegExp('^.*(?=.{8,16})(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[~!@#$%^&*?\(\)]).*$');
+      if (!regex.test(this.passwordData.newPassword)) {
+        this.$Message.warning('新密码应该由8-16位大写字母、小写字母、数字与特殊符号的组合！');
         return;
       }
-      if(this.$regex.passWordReg(this.passwordData.newPassword)){
+      if (this.$regex.passWordReg(this.passwordData.newPassword)) {
         this.$Message.warning('密码格式不正确,不能输入汉字');
         return;
       }
-      if(!this.passwordData.newTruePassword){
+      if (!this.passwordData.newTruePassword) {
         this.$Message.warning('请输入确认密码');
         return;
       }
-      if(this.passwordData.newPassword != this.passwordData.newTruePassword){
+      if (this.passwordData.newPassword != this.passwordData.newTruePassword) {
         this.$Message.warning('请输入新密码两次输入不一致');
         return;
       }
 
-      let param = {
-        userId:Storage.get('userId'),
-        oldPassword:this.passwordData.oldPassword,
-        newPassword:this.passwordData.newPassword,
-      }
-      loginServer.sysUsersupdateUserPassword(param).then(res => {
-        if(res.data.code == 200){
+      const param = {
+        userId: Storage.get('userId'),
+        oldPassword: this.passwordData.oldPassword,
+        newPassword: this.passwordData.newPassword,
+      };
+      loginServer.sysUsersupdateUserPassword(param).then((res) => {
+        if (res.data.code == 200) {
           this.$Message.success(res.data.msg);
           this.showModel = false;
-          setTimeout(() =>{
+          setTimeout(() => {
             Storage.removeAll();
-            this.routeTo('login')
-          },1500);
-        }else{
+            this.routeTo('login');
+          }, 1500);
+        } else {
           this.$Message.error(res.data.msg);
         }
-      })
+      });
     },
-    goHome () {
+    goHome() {
       window.location.href = process.env.HOME_URL;
     },
-    bigDataBoard () {
-      this.routeTo('bigDataKanban')
+    bigDataBoard() {
+      this.routeTo('bigDataKanban');
     },
-    getRouteArr (list) {//根据权限菜单得到路由
-      if(list.resChile && list.resChile.length >= 1){
-        list.resChile.forEach(item => {
-          this.getRouteArr(item)
-        })
-      }else{
-        this.routerArr.push(list.path)
+    getRouteArr(list) { // 根据权限菜单得到路由
+      if (list.resChile && list.resChile.length >= 1) {
+        list.resChile.forEach((item) => {
+          this.getRouteArr(item);
+        });
+      } else {
+        this.routerArr.push(list.path);
       }
-    }
+    },
   },
-  mounted () {
+  mounted() {
     this.userName = Storage.get('userName') || 'adminMaster';
-    let manuListCache = Storage.get('menuList');
-    if(manuListCache){
+    const manuListCache = Storage.get('menuList');
+    if (manuListCache) {
       this.menuList = JSON.parse(manuListCache);
     } else {
       Storage.removeAll();
       location.href = process.env.VUE_APP_BASE_URL;
     }
-    
-    if(this.routerArr.indexOf('home') == -1){
+
+    if (this.routerArr.indexOf('home') == -1) {
       this.routerArr.push('home');
     }
-    this.menuList.forEach(item => {
+    this.menuList.forEach((item) => {
       this.getRouteArr(item);
     });
-    Storage.set("routerArr", this.routerArr);
-    if(Storage.get('tagNaveList')){
-      this.tagList = JSON.parse(Storage.get('tagNaveList'))
-      this.$store.commit('setCacheList', this.tagList.map(item=>item.name))
-      if(this.tagList.findIndex(item => item.name === this.$route.name) == -1){
-        this.routeTo('home')
+    Storage.set('routerArr', this.routerArr);
+    if (Storage.get('tagNaveList')) {
+      this.tagList = JSON.parse(Storage.get('tagNaveList'));
+      this.$store.commit('setCacheList', this.tagList.map((item) => item.name));
+      if (this.tagList.findIndex((item) => item.name === this.$route.name) == -1) {
+        this.routeTo('home');
         setTagNavListInLocalstorage([...this.tagList]);
-      }else{
+      } else {
         this.getOpenName(this.$route.path);
         setTimeout(() => {
-          this.getTagElementByRoute(this.$route)
-        }, 200)
+          this.getTagElementByRoute(this.$route);
+        }, 200);
       }
-    }else{
-      this.routeTo('home')
+    } else {
+      this.routeTo('home');
     }
   },
   watch: {
-    '$route' (newRoute) {
-      const { name, query, params, meta } = newRoute
-      if(this.tagList.findIndex(item => item.name === name) == -1){
+    $route(newRoute) {
+      const {
+        name, query, params, meta,
+      } = newRoute;
+      if (this.tagList.findIndex((item) => item.name === name) == -1) {
         // if(newRoute.matched.length > 2){
         //   const parents = newRoute.matched.filter((item, index)=>{
         //     return index > 0 && index < newRoute.matched.length -1
@@ -525,15 +522,17 @@ export default {
         //     }
         //   });
         // }
-        this.tagList.push({ name, query, params, meta });
-        this.$store.commit('setCacheList', this.tagList.map(item=>item.name))
+        this.tagList.push({
+          name, query, params, meta,
+        });
+        this.$store.commit('setCacheList', this.tagList.map((item) => item.name));
         setTagNavListInLocalstorage([...this.tagList]);
       }
       this.getTagElementByRoute(newRoute);
       this.getOpenName(newRoute.path);
-    }
+    },
   },
-}
+};
 </script>
 
 <style lang="less" scoped>

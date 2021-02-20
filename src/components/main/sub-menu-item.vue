@@ -20,8 +20,8 @@ export default {
   props: {
     parentItem: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
-}
+};
 </script>
