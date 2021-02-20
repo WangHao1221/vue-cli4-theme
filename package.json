@@ -18,7 +18,7 @@
     },
     "lint-staged": {
         "**/*.{js,vue}": [
-            "npm run lint"
+            "vue-cli-service lint"
         ]
     },
     "dependencies": {
