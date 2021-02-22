@@ -9,16 +9,13 @@
         "test": "vue-cli-service build --mode test",
         "pre": "vue-cli-service build --mode pre",
         "lint": "vue-cli-service lint",
-        "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "npm run lint-staged"
-        }
+        "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src",
+        "precommit": "lint-staged"
     },
     "lint-staged": {
-        "**/*.{js,vue}": [
-            "vue-cli-service lint"
+        "src/**/*.{js,json,css,vue}": [
+            "eslint --fix",
+            "git add"
         ]
     },
     "dependencies": {
