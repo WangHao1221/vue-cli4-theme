@@ -9,12 +9,14 @@
         "test": "vue-cli-service build --mode test",
         "pre": "vue-cli-service build --mode pre",
         "lint": "vue-cli-service lint",
-        "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src",
-        "precommit": "lint-staged"
+        "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src"
+    },
+    "gitHooks": {
+        "prepare-commit-msg": "lint-staged"
     },
     "lint-staged": {
-        "src/**/*.{js,json,css,vue}": [
-            "eslint --fix",
+        "*.{js,vue}": [
+            "vue-cli-service lint",
             "git add"
         ]
     },
