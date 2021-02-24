@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/prefer-default-export
 export const getMenuList = () => [{
   id: '1',
   name: '模板系统管理',

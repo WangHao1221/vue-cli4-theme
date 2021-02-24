@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Vue from 'vue';
 import App from './App.vue';
 import 'core-js/stable';
@@ -22,31 +23,31 @@ Vue.prototype.$regex = regex;
 const EventBus = new Vue();
 // Add to Vue properties by exposing a getter for $bus
 Object.defineProperties(Vue.prototype, {
-  $bus: {
-    get() {
-      return EventBus;
+    $bus: {
+        get() {
+            return EventBus;
+        },
     },
-  },
 });
 new Vue({
-  router,
-  store,
-  render: (h) => h(App),
+    router,
+    store,
+    render: (h) => h(App),
 }).$mount('#app');
 router.beforeEach((to, from, next) => { // 导航守卫
-  // console.log(to, from)
-  if (to.name != 'login' && to.name != 'loginPath' && to.name != 'home') {
-    if (Storage.get('routerArr').indexOf(to.name) == -1) { // 如果当前路由不在权限路由数组中进行提醒
-      ViewUI.Message.error({
-        content: '当前登录用户无该页面权限或该页面不存在，请确认后重试！',
-        duration: 5,
-      });
-      router.push(from.name);
-      next(false);
+    // console.log(to, from)
+    if (to.name !== 'login' && to.name !== 'loginPath' && to.name !== 'home') {
+        if (Storage.get('routerArr').indexOf(to.name) === -1) { // 如果当前路由不在权限路由数组中进行提醒
+            ViewUI.Message.error({
+                content: '当前登录用户无该页面权限或该页面不存在，请确认后重试！',
+                duration: 5,
+            });
+            router.push(from.name);
+            next(false);
+        } else {
+            next();
+        }
     } else {
-      next();
+        next();
     }
-  } else {
-    next();
-  }
 });
