@@ -4,9 +4,9 @@ import axios from 'axios';
 export const login = (params) => axios.post(`${axios.AUTH_BASE_API}/oauth/token`, params, {
   transformRequest: [function (data) {
     let params = '';
-    for (const key in data) {
+    Object.keys(data).forEach((key) => {
       params += `${key}=${data[key]}&`;
-    }
+    });
     return params.substr(0, params.length - 1);
   }],
 }).then((res) => res);

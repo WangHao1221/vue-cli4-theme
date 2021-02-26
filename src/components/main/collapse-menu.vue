@@ -43,6 +43,7 @@ export default {
       this.$emit('on-click', name);
     },
     handleMousemove(event, children) {
+      console.log(event, children);
     },
   },
   mounted() {

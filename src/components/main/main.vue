@@ -136,13 +136,13 @@ import { routeEqual, setTagNavListInLocalstorage } from '@/plugins/util';
 import * as loginServer from '@/api/login.api';
 import subMenuItem from './sub-menu-item';// 展开的菜单层级
 import collapseMenu from './collapse-menu';// 收起的菜单层级
-
+/* eslint-disable */
 export default {
-  name: 'home',
-  components: {
-    subMenuItem,
-    collapseMenu,
-  },
+    name: 'home',
+    components: {
+      subMenuItem,
+      collapseMenu,
+    },
   data() {
     return {
       sysName: process.env.VUE_APP_PROJECT_NAME, // 项目名称
@@ -197,7 +197,7 @@ export default {
         params = route.params;
         query = route.query;
       }
-      if (name != this.$route.name) {
+      if (name !== this.$route.name) {
         this.$router.push({
           name,
           params,
@@ -270,7 +270,7 @@ export default {
       this.$store.commit('setCacheList', this.tagList.map((item) => item.name));
       this.changeNavBarStatus();
       if (routeEqual(item, this.$route)) { // 如果关闭的是当前活动tag
-        if (itemIdx == this.tagList.length) { // 关闭tag在最后一个位置
+        if (itemIdx === this.tagList.length) { // 关闭tag在最后一个位置
           this.routeTo(this.tagList[itemIdx - 1].name);
         } else {
           this.routeTo(this.tagList[itemIdx].name);
@@ -300,15 +300,13 @@ export default {
     moveToView(tag) { // 移动当前活动tag在可视范围内
       const outerWidth = this.$refs.tagScrollContainer.clientWidth;
       const bodyWidth = this.$refs.tagList.clientWidth;
-      const tagleftX = tag.offsetWidth + tag.offsetLeft + this.tagMarginRight;
-      const tagRightX = tag.offsetWidth + tag.offsetLeft + this.tagMarginRight;
       let visibleAreaBodyRight = outerWidth - this.tagBodyLeft; // 可视标签区域
       if (visibleAreaBodyRight > bodyWidth) {
         visibleAreaBodyRight = bodyWidth + this.tagBodyLeft;
       }
       if (bodyWidth < outerWidth) {
         this.tagBodyLeft = 0;
-      } else if (tag.offsetLeft < -this.tagBodyLeft || this.$route.name == 'home') {
+      } else if (tag.offsetLeft < -this.tagBodyLeft || this.$route.name === 'home') {
         // 标签在可视区域左侧
         this.tagBodyLeft = -tag.offsetLeft + this.tagMarginRight;
       } else if (tag.offsetLeft > -this.tagBodyLeft && tag.offsetLeft + tag.offsetWidth < -this.tagBodyLeft + outerWidth) {
@@ -356,9 +354,9 @@ export default {
       });
     },
     userDropClick(type) {
-      if (type == 'loginOut') {
+      if (type === 'loginOut') {
         Storage.removeAll();
-        location.href = process.env.VUE_APP_BASE_URL;
+        window.location.href = process.env.VUE_APP_BASE_URL;
       } else if (type === 'changePass') {
         this.showModel = true;
       }
@@ -367,43 +365,43 @@ export default {
       let currentTagIndex = -1;
       let closeNumber = 0;
       switch (type) {
-        case 'all':
-          this.tagList = [{
-            name: 'home',
-            meta: {
-              title: '首页',
-            },
-            params: {},
-            query: {},
-          }];
-          this.tagClick(this.tagList[0]);
-          break;
-        case 'left':
-          currentTagIndex = this.tagList.findIndex((item) => item.name === this.$route.name);
-          if (currentTagIndex > 1) {
-            this.tagList.splice(1, currentTagIndex - 1);
-            this.moveToView(this.tagList[1]);
-          }
-          break;
-        case 'right':
-          currentTagIndex = this.tagList.findIndex((item) => item.name === this.$route.name);
-          closeNumber = this.tagList.length - 1 - currentTagIndex;
-          if (closeNumber > 0) {
-            this.tagList.splice(currentTagIndex + 1);
-            this.moveToView(this.tagList[currentTagIndex]);
-          }
-          break;
-        case 'other':
-          currentTagIndex = this.tagList.findIndex((item) => item.name === this.$route.name);
-          closeNumber = this.tagList.length - 1 - currentTagIndex;
-          if (closeNumber > 0) {
-            this.tagList.splice(currentTagIndex + 1);
-          }
-          if (currentTagIndex > 1) {
-            this.tagList.splice(1, currentTagIndex - 1);
-          }
+      case 'all':
+        this.tagList = [{
+          name: 'home',
+          meta: {
+            title: '首页',
+          },
+          params: {},
+          query: {},
+        }];
+        this.tagClick(this.tagList[0]);
+        break;
+      case 'left':
+        currentTagIndex = this.tagList.findIndex((item) => item.name === this.$route.name);
+        if (currentTagIndex > 1) {
+          this.tagList.splice(1, currentTagIndex - 1);
           this.moveToView(this.tagList[1]);
-          break;
+        }
+        break;
+      case 'right':
+        currentTagIndex = this.tagList.findIndex((item) => item.name === this.$route.name);
+        closeNumber = this.tagList.length - 1 - currentTagIndex;
+        if (closeNumber > 0) {
+          this.tagList.splice(currentTagIndex + 1);
+          this.moveToView(this.tagList[currentTagIndex]);
+        }
+        break;
+      case 'other':
+        currentTagIndex = this.tagList.findIndex((item) => item.name === this.$route.name);
+        closeNumber = this.tagList.length - 1 - currentTagIndex;
+        if (closeNumber > 0) {
+          this.tagList.splice(currentTagIndex + 1);
+        }
+        if (currentTagIndex > 1) {
+          this.tagList.splice(1, currentTagIndex - 1);
+        }
+        this.moveToView(this.tagList[1]);
+        break;
       }
       this.$store.commit('setCacheList', this.tagList.map((item) => item.name));
       setTagNavListInLocalstorage([...this.tagList]);
@@ -421,11 +419,6 @@ export default {
         this.$Message.warning('密码格式不正确,6-20位数');
         return;
       }
-      const regex = new RegExp('^.*(?=.{8,16})(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[~!@#$%^&*?\(\)]).*$');
-      if (!regex.test(this.passwordData.newPassword)) {
-        this.$Message.warning('新密码应该由8-16位大写字母、小写字母、数字与特殊符号的组合！');
-        return;
-      }
       if (this.$regex.passWordReg(this.passwordData.newPassword)) {
         this.$Message.warning('密码格式不正确,不能输入汉字');
         return;
@@ -434,7 +427,7 @@ export default {
         this.$Message.warning('请输入确认密码');
         return;
       }
-      if (this.passwordData.newPassword != this.passwordData.newTruePassword) {
+      if (this.passwordData.newPassword !== this.passwordData.newTruePassword) {
         this.$Message.warning('请输入新密码两次输入不一致');
         return;
       }
@@ -480,10 +473,10 @@ export default {
       this.menuList = JSON.parse(manuListCache);
     } else {
       Storage.removeAll();
-      location.href = process.env.VUE_APP_BASE_URL;
+      window.location.href = process.env.VUE_APP_BASE_URL;
     }
 
-    if (this.routerArr.indexOf('home') == -1) {
+    if (this.routerArr.indexOf('home') === -1) {
       this.routerArr.push('home');
     }
     this.menuList.forEach((item) => {
@@ -493,7 +486,7 @@ export default {
     if (Storage.get('tagNaveList')) {
       this.tagList = JSON.parse(Storage.get('tagNaveList'));
       this.$store.commit('setCacheList', this.tagList.map((item) => item.name));
-      if (this.tagList.findIndex((item) => item.name === this.$route.name) == -1) {
+      if (this.tagList.findIndex((item) => item.name === this.$route.name) === -1) {
         this.routeTo('home');
         setTagNavListInLocalstorage([...this.tagList]);
       } else {

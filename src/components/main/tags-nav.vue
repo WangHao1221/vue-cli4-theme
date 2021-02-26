@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { showTitle, routeEqual } from '@/libs/util';
+import { showTitle, routeEqual } from '@/plugins/util';
 
 export default {
   name: 'TagsNav',

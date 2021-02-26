@@ -13,7 +13,7 @@
 import * as loginServer from '@/api/login.api';
 // import axios from 'axios';
 import { getMenuList } from '@/components/main/menu';
-
+/* eslint-disable */
 export default {
   name: 'Login',
   data() {
@@ -82,7 +82,9 @@ export default {
         } else {
           this.$Message.error(res.data.msg);
         }
-      }).catch((error) => {});
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     localLogin() {
       const List = getMenuList();
